@@ -14,7 +14,7 @@ RUN go build -o main .
 ######## Start a new stage from scratch #######
 FROM alpine:latest
 
-WORKDIR /root/
+WORKDIR /app/
 
 # Copy the Pre-built binary file from the previous stage
 COPY --from=builder /app/main .
