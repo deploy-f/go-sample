@@ -7,6 +7,8 @@ import (
     "io/ioutil"
 )
 
+var format string;
+
 func main() {
     port := os.Getenv("PORT")
     if(port == "") {
@@ -17,7 +19,8 @@ func main() {
     if(err != nil) {
         panic(err)
     }
-    fmt.Println("Format: " + string(dat))
+    format = string(dat)
+    fmt.Println("Format: " + format)
 
     fmt.Println("Start listen port " + port)
     
@@ -27,5 +30,5 @@ func main() {
 }
 
 func HelloServer(w http.ResponseWriter, r *http.Request) {
-    fmt.Fprintf(w, "Hello, %s!", r.URL.Path[1:])
+    fmt.Fprintf(w, format, r.URL.Path[1:])
 }

@@ -8,17 +8,17 @@ WORKDIR /app
 COPY . .
 
 # Build the Go app
-RUN go build -o main .
+RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o main .
 
 
 ######## Start a new stage from scratch #######
 FROM alpine:latest
 
-WORKDIR /app/
+WORKDIR /app
 
 # Copy the Pre-built binary file from the previous stage
-COPY --from=builder /app/main .
-COPY --from=builder /app/format.txt .
+COPY --from=builder /app/main main
+COPY --from=builder /app/format.txt format.txt
 
 # Expose port 8080 to the outside world
 EXPOSE 8080
